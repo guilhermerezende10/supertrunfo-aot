@@ -2,144 +2,63 @@
 # Atributos: Ataque, Defesa, Velocidade, Regeneração, Estratégia (escala 0-10)
 # Super Trunfo: Titã Fundador
 
-cartas = [
-    {
-        "nome": "Titã Fundador",
-        "super_trunfo": True,
-        "atributos": {
-            "ataque": 10,
-            "defesa": 10,
-            "velocidade": 8,
-            "regeneracao": 10,
-            "estrategia": 10,
-        },
-    },
-    {
-        "nome": "Titã de Ataque (Éren)",
-        "super_trunfo": False,
-        "atributos": {
-            "ataque": 10,
-            "defesa": 8,
-            "velocidade": 9,
-            "regeneracao": 9,
-            "estrategia": 7,
-        },
-    },
-    {
-        "nome": "Titã Colossal",
-        "super_trunfo": False,
-        "atributos": {
-            "ataque": 9,
-            "defesa": 7,
-            "velocidade": 2,
-            "regeneracao": 6,
-            "estrategia": 3,
-        },
-    },
-    {
-        "nome": "Titã Blindado",
-        "super_trunfo": False,
-        "atributos": {
-            "ataque": 7,
-            "defesa": 10,
-            "velocidade": 5,
-            "regeneracao": 5,
-            "estrategia": 4,
-        },
-    },
-    {
-        "nome": "Titã Fêmea",
-        "super_trunfo": False,
-        "atributos": {
-            "ataque": 8,
-            "defesa": 8,
-            "velocidade": 7,
-            "regeneracao": 7,
-            "estrategia": 8,
-        },
-    },
-    {
-        "nome": "Titã Bestial",
-        "super_trunfo": False,
-        "atributos": {
-            "ataque": 8,
-            "defesa": 6,
-            "velocidade": 5,
-            "regeneracao": 6,
-            "estrategia": 9,
-        },
-    },
-    {
-        "nome": "Titã Mandíbula",
-        "super_trunfo": False,
-        "atributos": {
-            "ataque": 5,
-            "defesa": 3,
-            "velocidade": 10,
-            "regeneracao": 7,
-            "estrategia": 4,
-        },
-    },
-    {
-        "nome": "Titã Carroceiro",
-        "super_trunfo": False,
-        "atributos": {
-            "ataque": 2,
-            "defesa": 4,
-            "velocidade": 8,
-            "regeneracao": 5,
-            "estrategia": 6,
-        },
-    },
-    {
-        "nome": "Titã Martelo de Guerra",
-        "super_trunfo": False,
-        "atributos": {
-            "ataque": 9,
-            "defesa": 9,
-            "velocidade": 3,
-            "regeneracao": 6,
-            "estrategia": 6,
-        },
-    },
-    {
-        "nome": "Capitão Levi",
-        "super_trunfo": False,
-        "atributos": {
-            "ataque": 9,
-            "defesa": 5,
-            "velocidade": 10,
-            "regeneracao": 1,
-            "estrategia": 8,
-        },
-    },
-    {
-        "nome": "Mikasa Ackerman",
-        "super_trunfo": False,
-        "atributos": {
-            "ataque": 8,
-            "defesa": 4,
-            "velocidade": 9,
-            "regeneracao": 1,
-            "estrategia": 7,
-        },
-    },
-    {
-        "nome": "Erwin Smith",
-        "super_trunfo": False,
-        "atributos": {
-            "ataque": 4,
-            "defesa": 2,
-            "velocidade": 6,
-            "regeneracao": 0,
-            "estrategia": 10,
-        },
-    },
-]
+import random
 
-if __name__ == "__main__":
-    for c in cartas:
-        marca = " ⭐ SUPER TRUNFO" if c["super_trunfo"] else ""
-        print(f"\n{c['nome']}{marca}")
-        for atr, val in c["atributos"].items():
-            print(f"  {atr.capitalize():<12} {val}")
+from exibicao import exibir_carta, introducao
+
+cartas = [
+    ["Titã Fundador",          True,  10, 10,  8, 10, 8],
+    ["Titã de Ataque (Éren)",  False, 10,  8,  9,  9,  7],
+    ["Titã Colossal",          False,  9,  7,  2,  6,  3],
+    ["Titã Blindado",          False,  7, 10,  5,  5,  4],
+    ["Titã Fêmea",             False,  8,  8,  7,  7,  8],
+    ["Titã Bestial",           False,  8,  6,  5,  6,  9],
+    ["Titã Mandíbula",         False,  5,  3, 10,  7,  4],
+    ["Titã Carroceiro",        False,  2,  4,  8,  5,  6],
+    ["Titã Martelo de Guerra", False,  9,  9,  3,  6,  6],
+    ["Capitão Levi",           False,  9,  5, 10,  1,  8],
+    ["Mikasa Ackerman",        False,  8,  4,  9,  1,  7],
+    ["Erwin Smith",            False,  4,  2,  6,  0, 10],
+]          
+
+def embaralhar_cartas(cartas):
+    random.shuffle(cartas)
+    return cartas
+
+def dividir_cartas(cartas):
+    return cartas[:len(cartas)//2], cartas[len(cartas)//2:]
+
+def dar_cartas():
+    cartas_embaralhadas = embaralhar_cartas(cartas)
+    cartas_jogador, cartas_cpu = dividir_cartas(cartas_embaralhadas)
+    return cartas_jogador, cartas_cpu
+
+def modo_de_jogo():
+    print("Escolha o modo de jogo:")
+    print("1 - Jogador vs CPU")
+    print("2 - Jogador vs Jogador")
+    escolha = input("Digite 1 ou 2: ")
+    while escolha not in ["1", "2"]:
+        escolha = input("Entrada inválida. Digite 1 ou 2: ")
+    return escolha
+
+def single_player():
+    cartas_jogador, cartas_cpu = dar_cartas()
+    # Lógica do jogo para jogador vs CPU
+    
+def multiplayer():
+    cartas_jogador1, cartas_jogador2 = dar_cartas()
+    # Lógica do jogo para jogador vs jogador
+    
+def jogar():
+    introducao()
+    modo = modo_de_jogo()
+    
+    if modo == "1":
+        single_player()
+    else:
+        multiplayer()
+
+
+jogar()
+
