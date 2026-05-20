@@ -194,9 +194,9 @@ def _ler_tecla():
     return None
 
 
-def _selecionar_atributo_numerico(carta):
+def _selecionar_atributo_numerico(carta, inimiga=False):
     """Escolha de atributo por digitação (terminais sem leitura de setas)."""
-    for linha in _linhas_carta(carta, numerado=True):
+    for linha in _linhas_carta(carta, inimiga=inimiga, numerado=True):
         print(linha)
 
     total = len(atributos)
@@ -207,7 +207,7 @@ def _selecionar_atributo_numerico(carta):
     return 3 + int(escolha) - 1
 
 
-def selecionar_atributo_carta(carta):
+def selecionar_atributo_carta(carta, inimiga=False):
     """Mostra a carta e deixa o jogador escolher o atributo direto nela.
 
     Use ↑/↓ para mover a seleção e ENTER para confirmar. Devolve o índice
@@ -222,7 +222,7 @@ def selecionar_atributo_carta(carta):
     except (OSError, ValueError):
         interativo = False
     if not interativo:
-        return _selecionar_atributo_numerico(carta)
+        return _selecionar_atributo_numerico(carta, inimiga)
 
     selecao = 0
     try:
@@ -230,6 +230,7 @@ def selecionar_atributo_carta(carta):
         while True:
             linhas = _linhas_carta(
                 carta,
+                inimiga=inimiga,
                 indice_selecionado=primeiro + selecao,
                 rodape="↑/↓ mover  •  ENTER confirmar",
             )
@@ -249,6 +250,7 @@ def selecionar_atributo_carta(carta):
                 print(f"\033[{len(linhas)}A", end="")
                 for linha in _linhas_carta(
                     carta,
+                    inimiga=inimiga,
                     indice_selecionado=primeiro + selecao,
                     rodape="✔ atributo escolhido",
                     cor_rodape=GREEN,
@@ -257,25 +259,26 @@ def selecionar_atributo_carta(carta):
                 return primeiro + selecao
     except OSError:
         # o terminal não permitiu a leitura direta de teclas
-        return _selecionar_atributo_numerico(carta)
+        return _selecionar_atributo_numerico(carta, inimiga)
 
 
-def resultado_rodada(vencedor):
+def resultado_rodada(nome_vencedor=None, derrota=False):
     """Mostra o resultado da rodada numa faixa destacada.
 
-    vencedor: 'jogador', 'cpu' ou 'empate'.
+    nome_vencedor: nome de quem venceu a rodada; None indica empate.
+    derrota: True pinta a faixa de vermelho (ex.: a CPU venceu o humano).
     """
     largura = 64
 
-    if vencedor == "jogador":
-        cor = GREEN
-        texto = "★  VOCÊ VENCEU A RODADA!  ★"
-    elif vencedor == "cpu":
-        cor = RED
-        texto = "✖  A CPU VENCEU A RODADA  ✖"
-    else:
+    if nome_vencedor is None:
         cor = GRAY
         texto = "◆  EMPATE — AS CARTAS VÃO PARA A MESA  ◆"
+    elif derrota:
+        cor = RED
+        texto = f"✖  {nome_vencedor.upper()} VENCEU A RODADA  ✖"
+    else:
+        cor = GREEN
+        texto = f"★  {nome_vencedor.upper()} VENCEU A RODADA!  ★"
 
     print()
     print(f"{cor}╔{'═' * largura}╗{RESET}")
@@ -283,26 +286,27 @@ def resultado_rodada(vencedor):
     print(f"{cor}╚{'═' * largura}╝{RESET}")
 
 
-def fim_de_jogo(resultado, motivo=""):
+def fim_de_jogo(nome_vencedor=None, motivo="", derrota=False):
     """Tela de encerramento da partida.
 
-    resultado: 'jogador', 'cpu' ou 'empate'.
+    nome_vencedor: nome de quem venceu a partida; None indica empate.
     motivo: linha opcional explicando como a partida terminou.
+    derrota: True mostra a tela como derrota (ex.: a CPU venceu o humano).
     """
     largura = 64
 
-    if resultado == "jogador":
-        cor = GOLD
-        titulo = "V I T Ó R I A"
-        subtitulo = "Você venceu a partida!"
-    elif resultado == "cpu":
-        cor = RED
-        titulo = "D E R R O T A"
-        subtitulo = "A CPU venceu a partida."
-    else:
+    if nome_vencedor is None:
         cor = GRAY
         titulo = "E M P A T E"
         subtitulo = "A batalha terminou sem um vencedor."
+    elif derrota:
+        cor = RED
+        titulo = "D E R R O T A"
+        subtitulo = f"{nome_vencedor} venceu a partida."
+    else:
+        cor = GOLD
+        titulo = "V I T Ó R I A"
+        subtitulo = f"{nome_vencedor} venceu a partida!"
 
     print()
     print(f"{cor}╔{'═' * largura}╗{RESET}")
