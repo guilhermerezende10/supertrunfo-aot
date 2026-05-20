@@ -22,17 +22,17 @@ INDICE_PRIMEIRO_ATRIBUTO = 3
 # [nome, super_trunfo, counter, ataque, defesa, velocidade, regeneração, estratégia]
 cartas = [
     ["Titã Fundador",                       True,  False, 10, 10,  8, 10,  8],
-    ["Titã de Ataque (Eren Yeager)",        False, False, 10,  8,  9,  9,  7],
-    ["Titã Colossal (Bertholdt Hoover)",    False, False,  9,  7,  2,  6,  3],
-    ["Titã Blindado (Reiner Braun)",        False, False,  7, 10,  5,  5,  4],
-    ["Titã Fêmea (Annie Leonhart)",         False, False,  8,  8,  7,  7,  8],
-    ["Titã Bestial (Zeke Yeager)",          False, False,  8,  6,  5,  6,  9],
-    ["Titã Mandíbula (Porco Galliard)",     False, False,  5,  3, 10,  7,  4],
-    ["Titã Carroceiro (Pieck Finger)",      False, False,  2,  4,  8,  5,  6],
-    ["Titã Martelo de Guerra (Lara Tybur)", False, False,  9,  9,  3,  6,  6],
-    ["Capitão Levi",                        False, True,   9,  5, 10,  1,  8],
-    ["Mikasa Ackerman",                     False, False,  8,  4,  9,  1,  7],
-    ["Erwin Smith",                         False, False,  4,  2,  6,  0, 10],
+    ["Titã de Ataque (Eren Yeager)",        False, False, 10,  7,  8, 10,  7],
+    ["Titã Colossal (Bertholdt Hoover)",    False, False, 10,  8,  2,  4,  4],
+    ["Titã Blindado (Reiner Braun)",        False, False,  7, 10,  6,  8,  4],
+    ["Titã Fêmea (Annie Leonhart)",         False, False,  8,  8,  8,  8,  9],
+    ["Titã Bestial (Zeke Yeager)",          False, False,  8,  6,  5,  7,  9],
+    ["Titã Mandíbula (Porco Galliard)",     False, False,  8,  3, 10,  7,  4],
+    ["Titã Carroceiro (Pieck Finger)",      False, False,  2,  6,  9,  5,  8],
+    ["Titã Martelo de Guerra (Lara Tybur)", False, False,  9,  9,  5,  6,  5],
+    ["Capitão Levi",                        False, True,  10,  5, 10,  1,  8],
+    ["Mikasa Ackerman",                     False, False,  9,  4,  9,  1,  7],
+    ["Erwin Smith",                         False, False,  4,  2,  6,  1, 10],
 ]
 
 def embaralhar_cartas(cartas):
