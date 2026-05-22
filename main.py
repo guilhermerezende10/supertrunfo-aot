@@ -241,7 +241,9 @@ def single_player():
 
 def multiplayer():
     cartas_jogador1, cartas_jogador2 = dar_cartas()
-    # Lógica do jogo para jogador vs jogador
+    jogador1 = criar_jogador("Jogador_A", cartas_jogador1, humano=True)
+    jogador2 = criar_jogador("Jogador_B", cartas_jogador2, humano=True)
+    partida(jogador1, jogador2)
 
 def jogar():
     introducao()
